@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Replacer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔒 Text Replacer</h1>
+      <p class="subtitle">Bảo vệ thông tin cá nhân của bạn</p>
+    </header>
+
+    <div class="add-section">
+      <h2>Thêm thay thế mới</h2>
+      <div class="input-group">
+        <input type="text" id="realText" placeholder="Văn bản thật (VD: email@real.com)" />
+        <input type="text" id="fakeText" placeholder="Văn bản giả (VD: fake@email.com)" />
+        <button id="addBtn" class="btn-add">Thêm</button>
+      </div>
+    </div>
+
+    <div class="list-section">
+      <h2>Danh sách thay thế</h2>
+      <div id="replacementList" class="replacement-list"></div>
+      <p class="empty-state" id="emptyState">Chưa có thay thế nào. Hãy thêm mới!</p>
+    </div>
+
+    <footer>
+      <button id="clearAll" class="btn-clear">Xóa tất cả</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
