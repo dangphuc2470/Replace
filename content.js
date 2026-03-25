@@ -68,7 +68,9 @@ function escapeRegExp(string) {
 
 // Process all text nodes in the document
 function processTextNodes() {
-    replaceTextInNode(document.body);
+    if (document.documentElement) {
+        replaceTextInNode(document.documentElement);
+    }
 }
 
 // Intercept form submissions to replace fake with real values
@@ -119,11 +121,21 @@ const observer = new MutationObserver((mutations) => {
 });
 
 // Start observing
-observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-    characterData: true
-});
+if (document.documentElement) {
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+        characterData: true
+    });
+} else {
+    document.addEventListener('DOMContentLoaded', () => {
+        observer.observe(document.body || document.documentElement, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+    });
+}
 
 // Initial processing
 processTextNodes();
