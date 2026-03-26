@@ -36,6 +36,11 @@ function replaceFakeWithReal(element) {
 // Function to replace text in text nodes (for display elements)
 function replaceTextInNode(node) {
     if (node.nodeType === Node.TEXT_NODE) {
+        const parent = node.parentNode;
+        if (parent && (parent.nodeName === 'SCRIPT' || parent.nodeName === 'STYLE' || parent.nodeName === 'NOSCRIPT')) {
+            return;
+        }
+
         let text = node.textContent;
         let replaced = false;
 
@@ -47,11 +52,15 @@ function replaceTextInNode(node) {
         }
 
         if (replaced) {
-            node.textContent = text;
+            try {
+                node.textContent = text;
+            } catch (e) {
+                // Ignore errors from unmodifiable nodes
+            }
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
         // Don't process input/textarea elements
-        if (node.tagName !== 'INPUT' && node.tagName !== 'TEXTAREA' && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+        if (node.nodeName !== 'INPUT' && node.nodeName !== 'TEXTAREA' && node.nodeName !== 'SCRIPT' && node.nodeName !== 'STYLE' && node.nodeName !== 'NOSCRIPT') {
             for (const child of node.childNodes) {
                 replaceTextInNode(child);
             }
